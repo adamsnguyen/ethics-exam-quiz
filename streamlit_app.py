@@ -37,7 +37,6 @@ if not st.session_state.authorized:
         if verify_pin(pin_input):
             st.session_state.authorized = True
             st.success("Access Granted")
-            del pin_input
             st.experimental_rerun()
         else:
             st.error("Invalid PIN")
@@ -67,6 +66,7 @@ if st.session_state.authorized:
         for key, value in options.items():
             if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
                 select_option(index, key)
+                st.experimental_rerun()
 
     current_index = st.session_state.current_question
     display_question(current_index)
@@ -76,9 +76,11 @@ if st.session_state.authorized:
 
     if st.button("Previous") and current_index > 0:
         st.session_state.current_question -= 1
+        st.experimental_rerun()
 
     if st.button("Next") and current_index < len(questions) - 1:
         st.session_state.current_question += 1
+        st.experimental_rerun()
 
     # Sidebar for question status
     st.sidebar.title("Question Status")
@@ -86,3 +88,4 @@ if st.session_state.authorized:
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
         if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
             st.session_state.current_question = i
+            st.rerun()
