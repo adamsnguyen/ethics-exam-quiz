@@ -65,7 +65,7 @@ if st.session_state.authorized:
 
         for key, value in options.items():
             with st.container():
-                if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
+                if st.button(f"{key}: {value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
                     st.rerun()
 
