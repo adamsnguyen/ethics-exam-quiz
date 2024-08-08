@@ -57,8 +57,10 @@ if st.session_state.authorized:
 
     def select_option(index, key):
         st.session_state.answers[index] = key
+        dont_run = (key == questions[index]['correct_answer'])
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
-        st.rerun()
+        if not dont_run:
+            st.rerun()
 
     def display_question(index):
         question = questions[index]
@@ -69,7 +71,7 @@ if st.session_state.authorized:
         # Display feedback message after the question
         if f"answer{index}" in st.session_state:
             if st.session_state[f"answer{index}"]:
-                st.success(f"Correct: {options[questions[index]['correct_answer']]}")
+                st.success(f"Correct: {questions[index]['correct_answer']}: {options[questions[index]['correct_answer']]}")
             else:
                 st.error("Incorrect!")
                 
