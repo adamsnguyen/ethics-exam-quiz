@@ -25,7 +25,7 @@ def get_current_pin():
     pin = pin_doc['pin'] if pin_doc else None
 
     # Output the pin
-    st.write(pin_doc['pin'])
+    st.write(pin)
 
 # Initialize session state for authorization and PIN
 if 'authorized' not in st.session_state:
