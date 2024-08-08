@@ -64,7 +64,6 @@ if st.session_state.authorized:
         st.divider()
         options = question['options']
 
-        
         for key, value in options.items():
             col1, col2 = st.columns([1,8], vertical_alignment = "center")
             with col1:
@@ -72,9 +71,11 @@ if st.session_state.authorized:
             with col2:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
-        #st.rerun()
 
-   
+    def check_answer(index):
+        if st.session_state.answers[index] == questions[index]['correct_answer']:
+            return True
+        return False
 
     current_index = st.session_state.current_question
     
@@ -94,9 +95,11 @@ if st.session_state.authorized:
 
     with col4:
         if st.button("Submit", use_container_width=True):
-            st.write("Submitted!")
+            if check_answer(current_index):
+                st.success("Correct!")
+            else:
+                st.error("Incorrect!")
             st.rerun()
-    
 
     with col5:
         if st.button("Next", use_container_width=True) and current_index < len(questions) - 1:
