@@ -61,6 +61,7 @@ if st.session_state.authorized:
     def display_question(index):
         question = questions[index]
         st.write(question['question'])
+        st.divider()
         options = question['options']
 
         
@@ -75,17 +76,22 @@ if st.session_state.authorized:
 
     current_index = st.session_state.current_question
     display_question(current_index)
+    col3, col4, col5 = st.columns(3)
+    with col3:
+        if st.button("Previous") and current_index > 0:
+            st.session_state.current_question -= 1
+            st.rerun()
 
-    if st.button("Submit"):
-        st.write("Submitted!")
+    with col4:
+        if st.button("Submit"):
+            st.write("Submitted!")
+            st.rerun()
+    
 
-    if st.button("Previous") and current_index > 0:
-        st.session_state.current_question -= 1
-        st.rerun()
-
-    if st.button("Next") and current_index < len(questions) - 1:
-        st.session_state.current_question += 1
-        st.rerun()
+    with col5:
+        if st.button("Next") and current_index < len(questions) - 1:
+            st.session_state.current_question += 1
+            st.rerun()
 
     # Sidebar for question status
     st.sidebar.title("Question Status")
