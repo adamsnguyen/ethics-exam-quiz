@@ -57,10 +57,7 @@ if st.session_state.authorized:
 
     def select_option(index, key):
         st.session_state.answers[index] = key
-        if key == questions[index]['correct_answer']:
-            st.success("Correct!")
-        else:
-            st.error("Incorrect!")
+        st.session_state.answer_result = (key == questions[index]['correct_answer'])
 
     def display_question(index):
         question = questions[index]
@@ -75,6 +72,7 @@ if st.session_state.authorized:
             with col2:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
+                    st.rerun()
 
     current_index = st.session_state.current_question
     
@@ -83,6 +81,13 @@ if st.session_state.authorized:
     st.divider()
     
     display_question(current_index)
+
+    # Display feedback message after the question
+    if 'answer_result' in st.session_state:
+        if st.session_state.answer_result:
+            st.success("Correct!")
+        else:
+            st.error("Incorrect!")
 
     st.divider()
 
