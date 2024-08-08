@@ -11,9 +11,9 @@ client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
 db = client.db[st.secrets["questions"]]
 
 #list the collections
-st.write(db.list_collection_names())
-for coll in db.list_collection_names():
-    st.write(coll)
+lst = db.list_collection_names())
+for i in lst:
+    st.markdown("- " + i)
 
 try:
     # Attempt to get the server information to verify the connection
