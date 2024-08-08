@@ -19,8 +19,8 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
-    global client
-    global db
+    client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
+    db = client.db[st.secrets["questions"]]
     document_count = db['pincode'].count_documents({})
     # Output the number of documents
     st.write(f"Number of documents in 'pincode' collection: {document_count}")
