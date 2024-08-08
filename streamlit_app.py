@@ -58,6 +58,7 @@ if st.session_state.authorized:
     def select_option(index, key):
         st.session_state.answers[index] = key
         st.session_state[f"answer{current_index}"] = (key == questions[index]['correct_answer'])
+        st.rerun()
 
     def display_question(index):
         question = questions[index]
@@ -69,6 +70,7 @@ if st.session_state.authorized:
                 st.success("Correct!")
             else:
                 st.error("Incorrect!")
+        st.rerun()
                 
         st.divider()
         options = question['options']
