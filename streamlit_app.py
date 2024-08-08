@@ -1,6 +1,7 @@
 import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from bson.objectid import ObjectId
 
 st.session_state.update(st.session_state)
 
@@ -18,9 +19,14 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
-    pin_doc = db['pincode'].find_one({}, {'pin': 1})
-    st.write(pin_doc)
-    return pin_doc['pin'] if pin_doc else None
+    # Retrieve the pin from the pincode collection using the ObjectId
+    pin_doc = db['pincode'].find_one({'_id': ObjectId('66b417525f97a65f18cf2b08')}, {'pin': 1})
+
+    # Extract the pin if the document is found
+    pin = pin_doc['pin'] if pin_doc else None
+
+    # Output the pin
+    print(pin)
 
 # Initialize session state for authorization and PIN
 if 'authorized' not in st.session_state:
