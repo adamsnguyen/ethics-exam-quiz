@@ -74,6 +74,8 @@ if st.session_state.authorized:
                     select_option(index, key)
         #st.rerun()
 
+    st.divider()
+
     current_index = st.session_state.current_question
     display_question(current_index)
     col3, col4, col5 = st.columns(3)
