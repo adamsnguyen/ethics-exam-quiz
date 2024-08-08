@@ -57,15 +57,15 @@ if st.session_state.authorized:
 
     def select_option(index, key):
         st.session_state.answers[index] = key
-        st.session_state.answer_result = (key == questions[index]['correct_answer'])
+        st.session_state[f"answer{current_index}"] = (key == questions[index]['correct_answer'])
 
     def display_question(index):
         question = questions[index]
         st.write(question['question'])
 
         # Display feedback message after the question
-        if answer_result[current_index] in st.session_state:
-            if st.session_state.answer_result[current_index]:
+        if f"answer{current_index}" in st.session_state:
+            if st.session_state[f"answer{current_index}"]:
                 st.success("Correct!")
             else:
                 st.error("Incorrect!")
