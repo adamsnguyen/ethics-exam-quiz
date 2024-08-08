@@ -85,6 +85,8 @@ if st.session_state.authorized:
 
     current_index = st.session_state.current_question
     
+    st.title("Practice Quiz for NPPE Exam")
+
     st.header(f"Question {current_index+1}")
 
     st.divider()
@@ -122,14 +124,15 @@ if st.session_state.authorized:
             st.session_state.current_question = i
             st.rerun()
 
+    colprev, colnext = st.sidebar.columns(2)
+
     # Pagination controls in the sidebar
-    col1, col2 = st.sidebar.columns(2)
-    with col1:
-        if st.button("Previous Page", disabled=st.session_state.sidebar_page == 0):
+    with colprev:
+        if st.sidebar.button("Previous Page", disabled=st.session_state.sidebar_page == 0):
             st.session_state.sidebar_page -= 1
             st.rerun()
 
-    with col2:
-        if st.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1):
+    with colnext:
+        if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1):
             st.session_state.sidebar_page += 1
             st.rerun()
