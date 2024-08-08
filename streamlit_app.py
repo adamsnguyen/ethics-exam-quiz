@@ -11,6 +11,7 @@ client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
 db = client.db[st.secrets["questions"]]
 
 #list the collections
+st.write(db.list_collection_names())
 for coll in db.list_collection_names():
     st.write(coll)
 
