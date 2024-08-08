@@ -101,4 +101,6 @@ if st.session_state.authorized:
     st.sidebar.title("Question Status")
     for i, answer in enumerate(st.session_state.answers):
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
-        st.sidebar.write(f"Question {i+1}: {status}")
+        # Create a link for each question
+        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
+            st.session_state.current_question = i
