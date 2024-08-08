@@ -13,7 +13,6 @@ db = client[st.secrets["questions"]]
 try:
     # Attempt to get the server information to verify the connection
     client.server_info()
-    st.success("Connected to MongoDB successfully!")
 except Exception as e:
     st.error(f"Error connecting to MongoDB: {e}")
 
