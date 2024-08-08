@@ -107,7 +107,8 @@ if st.session_state.authorized:
             st.rerun()
 
     # Sidebar for question status with pagination
-    st.sidebar.title("Practice Questions")
+    with st.sidebar.columns(3)[1]:
+        st.title("Practice Questions")
     questions_per_page = 10
     total_pages = (len(questions) - 1) // questions_per_page + 1
 
