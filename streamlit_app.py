@@ -74,10 +74,16 @@ if st.session_state.authorized:
                     select_option(index, key)
         #st.rerun()
 
-    st.divider()
+   
 
     current_index = st.session_state.current_question
+    
+    
+    
     display_question(current_index)
+
+    st.divider()
+
     col3, col4, col5 = st.columns(3)
     with col3:
         if st.button("Previous", use_container_width=True) and current_index > 0:
