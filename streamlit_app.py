@@ -57,11 +57,8 @@ if st.session_state.authorized:
         st.session_state.answers = [None] * len(questions)
 
     def select_option(index, key):
-        global rerun
         st.session_state.answers[index] = key
-        rerun = False
         if f"answer{index}" in st.session_state:
-            rerun = not (key == st.session_state[f"answer{index}"])
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
         
 
@@ -90,8 +87,7 @@ if st.session_state.authorized:
             with col2:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
-                    if not rerun:
-                        st.rerun()
+
 
     current_index = st.session_state.current_question
     
