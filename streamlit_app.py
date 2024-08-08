@@ -105,7 +105,7 @@ if st.session_state.authorized:
             st.rerun()
 
     # Sidebar for question status
-    st.sidebar.title("Question Status")
+    st.sidebar.title("Questions")
     for i, answer in enumerate(st.session_state.answers):
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
         if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
