@@ -1,7 +1,6 @@
 import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-from bson.objectid import ObjectId
 
 # Connect to MongoDB
 uri = st.secrets["uri"]
@@ -39,7 +38,7 @@ if not st.session_state.authorized:
             st.session_state.authorized = True
             st.success("Access Granted")
             del pin_input
-            st.rerun()
+            st.experimental_rerun()
         else:
             st.error("Invalid PIN")
 
@@ -65,102 +64,25 @@ if st.session_state.authorized:
         st.write(question['question'])
         options = question['options']
 
-        # Define colors with 50% transparency
-        colors = ['#d9ed92', '#b5e48c', '#99d98c', '#76c893']
-        transparency = '80'  # 50% transparency in hex
-
-        # Create a 2x2 grid for the options
-        cols = st.columns(2)
-        for idx, (key, value) in enumerate(options.items()):
-            with cols[idx % 2]:
-                button_label = f"{chr(65 + idx)}: {value}"
-                button_key = f"option_{index}_{key}"
-                # Use markdown to create a button with custom style
-                button_html = f"""
-                <style>
-                .button-{button_key} {{
-                    background-color: {colors[idx]}{transparency};
-                    border: none;
-                    color: white;
-                    padding: 15px 32px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
-                    cursor: pointer;
-                    width: 100%;
-                    height: 180px;  /* Triple the height */
-                }}
-                </style>
-                <button class="button-{button_key}" onclick="window.location.href='/?selected_option={key}'">{button_label}</button>
-                """
-                st.markdown(button_html, unsafe_allow_html=True)
+        for key, value in options.items():
+            if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
+                select_option(index, key)
 
     current_index = st.session_state.current_question
     display_question(current_index)
 
-    # Submit button that spans across both columns
-    submit_col = st.columns(1)
-    with submit_col[0]:
-        submit_html = """
-        <style>
-        .submit-button {
-            width: 100%;
-            height: 60px;  /* Same height as navigation buttons */
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-        }
-        </style>
-        <button class="submit-button" onclick="window.location.href='/?submit=true'">Submit</button>
-        """
-        st.markdown(submit_html, unsafe_allow_html=True)
+    if st.button("Submit"):
+        st.write("Submitted!")
 
-    # Navigation buttons with equal width
-    nav_cols = st.columns(2)
-    with nav_cols[0]:
-        prev_html = """
-        <style>
-        .prev-button {
-            width: 100%;
-            height: 60px;  /* Consistent height */
-            background-color: #008CBA;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-        }
-        </style>
-        <button class="prev-button" onclick="window.location.href='/?prev=true'">Previous</button>
-        """
-        st.markdown(prev_html, unsafe_allow_html=True)
-    with nav_cols[1]:
-        next_html = """
-        <style>
-        .next-button {
-            width: 100%;
-            height: 60px;  /* Consistent height */
-            background-color: #008CBA;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-            font-size: 16px;
-        }
-        </style>
-        <button class="next-button" onclick="window.location.href='/?next=true'">Next</button>
-        """
-        st.markdown(next_html, unsafe_allow_html=True)
+    if st.button("Previous") and current_index > 0:
+        st.session_state.current_question -= 1
+
+    if st.button("Next") and current_index < len(questions) - 1:
+        st.session_state.current_question += 1
 
     # Sidebar for question status
     st.sidebar.title("Question Status")
     for i, answer in enumerate(st.session_state.answers):
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
-        link_key = f"link_{i}"
-        if st.sidebar.button(f"Question {i+1}: {status}", key=link_key):
+        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
             st.session_state.current_question = i
