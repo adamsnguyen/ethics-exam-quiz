@@ -10,6 +10,10 @@ uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
 db = client.db[st.secrets["questions"]]
 
+#list the collections
+for coll in db.list_collection_names():
+    st.write(coll)
+
 try:
     # Attempt to get the server information to verify the connection
     client.server_info()
