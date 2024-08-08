@@ -58,7 +58,6 @@ if st.session_state.authorized:
 
     def select_option(index, key):
         st.session_state.answers[index] = key
-        if f"answer{index}" in st.session_state:
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
         
 
