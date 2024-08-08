@@ -37,7 +37,7 @@ if not st.session_state.authorized:
         if verify_pin(pin_input):
             st.session_state.authorized = True
             st.success("Access Granted")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Invalid PIN")
 
