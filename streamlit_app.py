@@ -63,9 +63,13 @@ if st.session_state.authorized:
         st.write(question['question'])
         options = question['options']
 
+        
         for key, value in options.items():
-            with st.container():
-                if st.button(f"{key}: {value}", key=f"option_{index}_{key}", use_container_width=True):
+            col1, col2 = st.columns(2)
+            with col1:
+                st.write(f"{key}")
+            with col2:
+                if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
                     st.rerun()
 
