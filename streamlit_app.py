@@ -82,6 +82,8 @@ if st.session_state.authorized:
     
     display_question(current_index)
 
+    st.divider()
+
     # Display feedback message after the question
     if 'answer_result' in st.session_state:
         if st.session_state.answer_result:
