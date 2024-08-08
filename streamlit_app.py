@@ -91,7 +91,7 @@ if st.session_state.authorized:
     
     display_question(current_index)
 
-    
+    st.divider()
 
     col3, col4 = st.columns(2)
     with col3:
@@ -110,4 +110,3 @@ if st.session_state.authorized:
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
         if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
             st.session_state.current_question = i
-            st.rerun()
