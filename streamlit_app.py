@@ -58,7 +58,7 @@ if st.session_state.authorized:
     def select_option(index, key):
         st.session_state.answers[index] = key
         rerun = False
-        if st.session_state[f"answer{index}"] is not None:
+        if f"answer{index}" in st.session_state:
             rerun = (key == st.session_state[f"answer{index}"])
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
         if rerun:
