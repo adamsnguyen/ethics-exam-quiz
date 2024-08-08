@@ -10,11 +10,6 @@ uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
 db = client[st.secrets["questions"]]
 
-#list the collections
-lst = db.list_collection_names()
-for i in lst:
-    st.markdown("- " + i)
-
 try:
     # Attempt to get the server information to verify the connection
     client.server_info()
@@ -37,7 +32,6 @@ def get_current_pin():
 
     # Output the pin
     pin = pin_doc['pin']
-    st.write(pin)
     return pin
 
 # Initialize session state for authorization and PIN
