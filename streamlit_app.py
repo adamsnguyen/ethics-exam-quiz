@@ -135,7 +135,7 @@ if st.session_state.authorized:
 
     with colnext:
         with st.container():
-            if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1, use_column_width=True):
+            if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1, use_container_width=True):
                 st.session_state.sidebar_page += 1
                 st.rerun()
 
