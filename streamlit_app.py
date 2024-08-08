@@ -67,6 +67,10 @@ if st.session_state.authorized:
         st.session_state.current_question = 0
         st.session_state.answers = [None] * len(questions)
 
+    # Function to handle option selection
+    def select_option(index, key):
+        st.session_state.answers[index] = key
+
     # Function to display a question
     def display_question(index):
         question = questions[index]
@@ -75,8 +79,8 @@ if st.session_state.authorized:
         for key, value in options.items():
             # Ensure unique key for each option button
             button_key = f"option_{index}_{key}"
-            if st.button(value, key=button_key):
-                st.session_state.answers[index] = key
+            if st.button(value, key=button_key, on_click=select_option, args=(index, key)):
+                pass
 
     # Display the current question
     current_index = st.session_state.current_question
