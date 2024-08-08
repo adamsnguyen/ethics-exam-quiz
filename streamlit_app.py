@@ -78,18 +78,18 @@ if st.session_state.authorized:
     display_question(current_index)
     col3, col4, col5 = st.columns(3)
     with col3:
-        if st.button("Previous") and current_index > 0:
+        if st.button("Previous", use_container_width=True) and current_index > 0:
             st.session_state.current_question -= 1
             st.rerun()
 
     with col4:
-        if st.button("Submit"):
+        if st.button("Submit", use_container_width=True):
             st.write("Submitted!")
             st.rerun()
     
 
     with col5:
-        if st.button("Next") and current_index < len(questions) - 1:
+        if st.button("Next", use_container_width=True) and current_index < len(questions) - 1:
             st.session_state.current_question += 1
             st.rerun()
 
