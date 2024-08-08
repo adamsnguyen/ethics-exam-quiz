@@ -120,19 +120,21 @@ if st.session_state.authorized:
     for i in range(start_index, min(end_index, len(questions))):
         answer = st.session_state.answers[i]
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
-        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
+        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}", , use_container_width=True):
             st.session_state.current_question = i
             st.rerun()
 
-    # Pagination controls in the sidebar
-    colprev, colnext = st.sidebar.columns(2)  # Create two columns in the sidebar
+    colprev, colnext = st.sidebar.columns(2)
 
+    # Pagination controls in the sidebar
     with colprev:
-        if st.button("Previous Page", disabled=st.session_state.sidebar_page == 0):
+        if st.sidebar.button("Previous Page", disabled=st.session_state.sidebar_page == 0), , use_container_width=True:
             st.session_state.sidebar_page -= 1
             st.rerun()
 
     with colnext:
-        if st.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1):
+        if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1, , use_container_width=True):
             st.session_state.sidebar_page += 1
             st.rerun()
+
+    
