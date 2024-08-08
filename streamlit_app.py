@@ -57,6 +57,10 @@ if st.session_state.authorized:
 
     def select_option(index, key):
         st.session_state.answers[index] = key
+        if key == questions[index]['correct_answer']:
+            st.success("Correct!")
+        else:
+            st.error("Incorrect!")
 
     def display_question(index):
         question = questions[index]
@@ -72,11 +76,6 @@ if st.session_state.authorized:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
 
-    def check_answer(index):
-        if st.session_state.answers[index] == questions[index]['correct_answer']:
-            return True
-        return False
-
     current_index = st.session_state.current_question
     
     st.header(f"Question {current_index+1}")
@@ -87,21 +86,13 @@ if st.session_state.authorized:
 
     st.divider()
 
-    col3, col4, col5 = st.columns(3)
+    col3, col4 = st.columns(2)
     with col3:
         if st.button("Previous", use_container_width=True) and current_index > 0:
             st.session_state.current_question -= 1
             st.rerun()
 
     with col4:
-        if st.button("Submit", use_container_width=True):
-            if check_answer(current_index):
-                st.success("Correct!")
-            else:
-                st.error("Incorrect!")
-            st.rerun()
-
-    with col5:
         if st.button("Next", use_container_width=True) and current_index < len(questions) - 1:
             st.session_state.current_question += 1
             st.rerun()
