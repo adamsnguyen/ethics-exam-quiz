@@ -14,6 +14,8 @@ try:
     # Attempt to get the server information to verify the connection
     client.server_info()
     st.success("Connected to MongoDB successfully!")
+    pin_doc = db['pincode'].find_one({'_id': ObjectId('66b417525f97a65f18cf2b08')}, {'pin': 1})
+    st.write(pin_doc)
 except Exception as e:
     st.error(f"Error connecting to MongoDB: {e}")
 
@@ -26,7 +28,7 @@ def get_current_pin():
     pin = pin_doc['pin'] if pin_doc else None
 
     # Output the pin
-    st.write(pin)
+    st.write(pin_doc)
 
 # Initialize session state for authorization and PIN
 if 'authorized' not in st.session_state:
