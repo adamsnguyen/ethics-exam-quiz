@@ -64,9 +64,10 @@ if st.session_state.authorized:
         options = question['options']
 
         for key, value in options.items():
-            if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
-                select_option(index, key)
-                st.rerun()
+            with st.container():
+                if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
+                    select_option(index, key)
+                    st.rerun()
 
     current_index = st.session_state.current_question
     display_question(current_index)
