@@ -1,7 +1,6 @@
 import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-from bson.objectid import ObjectId
 
 st.session_state.update(st.session_state)
 
@@ -75,7 +74,8 @@ if st.session_state.authorized:
         st.write(question['question'])
         options = question['options']
         for key, value in options.items():
-            if st.button(value, key=key):
+            # Ensure unique key for each option button
+            if st.button(value, key=f"option_{index}_{key}"):
                 st.session_state.answers[index] = key
 
     # Display the current question
@@ -83,13 +83,13 @@ if st.session_state.authorized:
     display_question(current_index)
 
     # Navigation buttons
-    if st.button("Previous") and current_index > 0:
+    if st.button("Previous", key="prev") and current_index > 0:
         st.session_state.current_question -= 1
-    if st.button("Next") and current_index < len(questions) - 1:
+    if st.button("Next", key="next") and current_index < len(questions) - 1:
         st.session_state.current_question += 1
 
     # Submit button
-    if st.button("Submit"):
+    if st.button("Submit", key="submit"):
         correct_answer = questions[current_index]['correct_answer']
         user_answer = st.session_state.answers[current_index]
         if user_answer == correct_answer:
@@ -101,6 +101,6 @@ if st.session_state.authorized:
     st.sidebar.title("Question Status")
     for i, answer in enumerate(st.session_state.answers):
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
-        # Create a link for each question
+        # Create a button for each question link with a unique key
         if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
             st.session_state.current_question = i
