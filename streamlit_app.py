@@ -19,6 +19,7 @@ except Exception as e:
 # Function to get the current PIN from the database
 def get_current_pin():
     pin_doc = db['pincode'].find_one({}, {'pin': 1})
+    st.write(pin_doc)
     return pin_doc['pin'] if pin_doc else None
 
 # Initialize session state for authorization and PIN
