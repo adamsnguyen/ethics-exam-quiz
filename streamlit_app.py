@@ -78,7 +78,7 @@ if st.session_state.authorized:
 
     current_index = st.session_state.current_question
     
-    st.header(f"Question {current_index}")
+    st.header(f"Question {current_index+1}")
 
     st.divider()
     
