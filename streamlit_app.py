@@ -66,7 +66,7 @@ if st.session_state.authorized:
         for key, value in options.items():
             if st.button(f"{key}: {value}", key=f"option_{index}_{key}"):
                 select_option(index, key)
-                st.experimental_rerun()
+                st.rerun()
 
     current_index = st.session_state.current_question
     display_question(current_index)
@@ -76,11 +76,11 @@ if st.session_state.authorized:
 
     if st.button("Previous") and current_index > 0:
         st.session_state.current_question -= 1
-        st.experimental_rerun()
+        st.rerun()
 
     if st.button("Next") and current_index < len(questions) - 1:
         st.session_state.current_question += 1
-        st.experimental_rerun()
+        st.rerun()
 
     # Sidebar for question status
     st.sidebar.title("Question Status")
