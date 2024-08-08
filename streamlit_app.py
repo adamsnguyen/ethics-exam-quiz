@@ -108,7 +108,7 @@ if st.session_state.authorized:
 
     # Sidebar for question status with pagination
     with st.sidebar.container():
-        st.title("Practice Questions")
+        st.markdown("<h1 style='text-align: center; color: grey;'>Practice Questions</h1>", unsafe_allow_html=True)
     questions_per_page = 10
     total_pages = (len(questions) - 1) // questions_per_page + 1
 
