@@ -125,13 +125,13 @@ if st.session_state.authorized:
     with st.sidebar:
         colprev, colnext = st.columns(2)
 
-    # Pagination controls in the sidebar
-    with colprev:
-        if st.sidebar.button("Previous Page", disabled=st.session_state.sidebar_page == 0):
-            st.session_state.sidebar_page -= 1
-            st.rerun()
+        # Pagination controls in the sidebar
+        with colprev:
+            if st.sidebar.button("Previous Page", disabled=st.session_state.sidebar_page == 0):
+                st.session_state.sidebar_page -= 1
+                st.rerun()
 
-    with colnext:
-        if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1):
-            st.session_state.sidebar_page += 1
-            st.rerun()
+        with colnext:
+            if st.sidebar.button("Next Page", disabled=st.session_state.sidebar_page >= total_pages - 1):
+                st.session_state.sidebar_page += 1
+                st.rerun()
