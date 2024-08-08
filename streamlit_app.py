@@ -2,8 +2,16 @@ import streamlit as st
 from pymongo import MongoClient
 
 # Connect to MongoDB
-uri = st.secrets["mongo"]["uri"]
-client = MongoClient(uri)
+uri = st.secrets["uri"]
+client = MongoClient(uri, serverSelectionTimeoutMS=5000)  # 5000 
+
+try:
+    # Attempt to get the server information to verify the connection
+    client.server_info()
+    st.success("Connected to MongoDB successfully!")
+except Exception as e:
+    st.error(f"Error connecting to MongoDB: {e}")
+
 questions = st.secrets["questions"]
 db = client[questions]
 collection = db['questions']
