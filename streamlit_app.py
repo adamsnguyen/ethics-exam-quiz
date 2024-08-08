@@ -19,6 +19,7 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
+    global db
     # Retrieve the pin from the pincode collection using the ObjectId
     pin_doc = db["pincode"].find_one({}, {'pin': 1})
     # Extract the pin if the document is found
