@@ -69,7 +69,7 @@ if st.session_state.authorized:
         # Display feedback message after the question
         if f"answer{index}" in st.session_state:
             if st.session_state[f"answer{index}"]:
-                st.success(f"Correct: {options[questions[index]['correct_answer']])
+                st.success(f"Correct: {options[questions[index]['correct_answer']]}")
             else:
                 st.error("Incorrect!")
                 
