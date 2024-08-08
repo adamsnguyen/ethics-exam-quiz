@@ -62,6 +62,14 @@ if st.session_state.authorized:
     def display_question(index):
         question = questions[index]
         st.write(question['question'])
+
+        # Display feedback message after the question
+        if answer_result[current_index] in st.session_state:
+            if st.session_state.answer_result[current_index]:
+                st.success("Correct!")
+            else:
+                st.error("Incorrect!")
+                
         st.divider()
         options = question['options']
 
@@ -82,16 +90,7 @@ if st.session_state.authorized:
     
     display_question(current_index)
 
-    st.divider()
-
-    # Display feedback message after the question
-    if 'answer_result' in st.session_state:
-        if st.session_state.answer_result:
-            st.success("Correct!")
-        else:
-            st.error("Incorrect!")
-
-    st.divider()
+    
 
     col3, col4 = st.columns(2)
     with col3:
