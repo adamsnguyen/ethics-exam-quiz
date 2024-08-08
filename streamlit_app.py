@@ -112,6 +112,8 @@ if st.session_state.authorized:
     questions_per_page = 10
     total_pages = (len(questions) - 1) // questions_per_page + 1
 
+    st.sidebar.divider()
+
     if 'sidebar_page' not in st.session_state:
         st.session_state.sidebar_page = 0
 
@@ -124,6 +126,8 @@ if st.session_state.authorized:
         if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}", use_container_width=True):
             st.session_state.current_question = i
             st.rerun()
+
+    st.sidebar.divider()
 
     colprev, colnext = st.sidebar.columns(2)
 
