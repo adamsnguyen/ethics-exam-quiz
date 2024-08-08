@@ -11,7 +11,7 @@ client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
 db = client.db[st.secrets["questions"]]
 
 #list the collections
-lst = db.list_collection_names())
+lst = db.list_collection_names()
 for i in lst:
     st.markdown("- " + i)
 
