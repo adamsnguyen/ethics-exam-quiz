@@ -1,6 +1,7 @@
 import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from bson.objectid import ObjectId
 
 st.session_state.update(st.session_state)
 
@@ -75,7 +76,9 @@ if st.session_state.authorized:
         options = question['options']
         for key, value in options.items():
             # Ensure unique key for each option button
-            if st.button(value, key=f"option_{index}_{key}"):
+            button_key = f"option_{index}_{key}"
+            st.write(f"Debug: Displaying button with key {button_key}")
+            if st.button(value, key=button_key):
                 st.session_state.answers[index] = key
 
     # Display the current question
@@ -102,5 +105,7 @@ if st.session_state.authorized:
     for i, answer in enumerate(st.session_state.answers):
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
         # Create a button for each question link with a unique key
-        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}"):
+        link_key = f"link_{i}"
+        st.write(f"Debug: Creating sidebar button with key {link_key}")
+        if st.sidebar.button(f"Question {i+1}: {status}", key=link_key):
             st.session_state.current_question = i
