@@ -120,7 +120,7 @@ if st.session_state.authorized:
     for i in range(start_index, min(end_index, len(questions))):
         answer = st.session_state.answers[i]
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
-        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}", , use_container_width=True):
+        if st.sidebar.button(f"Question {i+1}: {status}", key=f"link_{i}", use_container_width=True):
             st.session_state.current_question = i
             st.rerun()
 
