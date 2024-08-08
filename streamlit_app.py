@@ -19,7 +19,7 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
-    pins = list(db['pincode'].find())
+    pins = list(db.find())
     st.write(pins)
     pin = pins[0]
 
