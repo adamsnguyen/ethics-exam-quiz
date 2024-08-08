@@ -52,7 +52,7 @@ if st.session_state.authorized:
 
 if st.session_state.authorized:
     questions = list(db['questions'].find())
-
+    
     if 'current_question' not in st.session_state:
         st.session_state.current_question = 0
         st.session_state.answers = [None] * len(questions)
@@ -65,11 +65,11 @@ if st.session_state.authorized:
         st.write(question['question'])
         options = question['options']
 
-        # Create a 2x2 grid for the options
-        cols = st.columns(2)
-        for i, (key, value) in enumerate(options.items()):
-            with cols[i % 2]:
-                button_label = f"{chr(65 + i)}: {value}"  # Label with A, B, C, D
+        # Create a 2x2 grid for the options with equal size buttons
+        cols = st.columns(2)  # Create two columns for grid layout
+        for idx, (key, value) in enumerate(options.items()):
+            with cols[idx % 2]:  # Alternate between the two columns
+                button_label = f"{chr(65 + idx)}: {value}"  # Labels A, B, C, D
                 button_key = f"option_{index}_{key}"
                 if st.button(button_label, key=button_key):
                     select_option(index, key)
@@ -77,21 +77,23 @@ if st.session_state.authorized:
     current_index = st.session_state.current_question
     display_question(current_index)
 
-    # Submit button
-    if st.button("Submit", key="submit"):
-        correct_answer = questions[current_index]['correct_answer']
-        user_answer = st.session_state.answers[current_index]
-        if user_answer == correct_answer:
-            st.success("Correct!")
-        else:
-            st.error("Incorrect!")
+    # Submit button that spans across both columns
+    submit_col = st.columns(1)
+    with submit_col[0]:
+        if st.button("Submit", key="submit"):
+            correct_answer = questions[current_index]['correct_answer']
+            user_answer = st.session_state.answers[current_index]
+            if user_answer == correct_answer:
+                st.success("Correct!")
+            else:
+                st.error("Incorrect!")
 
-    # Navigation buttons
-    col1, col2 = st.columns(2)
-    with col1:
+    # Navigation buttons with equal width
+    nav_cols = st.columns(2)
+    with nav_cols[0]:  # Previous button column
         if st.button("Previous", key="prev") and current_index > 0:
             st.session_state.current_question -= 1
-    with col2:
+    with nav_cols[1]:  # Next button column
         if st.button("Next", key="next") and current_index < len(questions) - 1:
             st.session_state.current_question += 1
 
