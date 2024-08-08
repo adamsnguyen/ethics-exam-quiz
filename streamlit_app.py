@@ -6,6 +6,7 @@ from pymongo.server_api import ServerApi
 uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)
 db = client[st.secrets["questions"]]
+rerun = False
 
 try:
     client.server_info()
@@ -61,10 +62,11 @@ if st.session_state.authorized:
         if f"answer{index}" in st.session_state:
             rerun = not (key == st.session_state[f"answer{index}"])
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
-        if not rerun:
-            st.rerun()
+        
+
 
     def display_question(index):
+        global rerun
         question = questions[index]
         st.write(question['question'])
 
@@ -87,7 +89,8 @@ if st.session_state.authorized:
             with col2:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
-                   # st.rerun()
+                    if not rerun:
+                        st.rerun()
 
     current_index = st.session_state.current_question
     
