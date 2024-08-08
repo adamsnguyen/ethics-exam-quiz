@@ -122,8 +122,7 @@ if st.session_state.authorized:
             st.session_state.current_question = i
             st.rerun()
 
-    with st.sidebar:
-        colprev, colnext = st.columns(2)
+        colprev, colnext = st.sidebar.columns(2)
 
         # Pagination controls in the sidebar
         with colprev:
