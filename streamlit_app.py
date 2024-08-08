@@ -14,16 +14,13 @@ try:
     # Attempt to get the server information to verify the connection
     client.server_info()
     st.success("Connected to MongoDB successfully!")
-    pin_doc = db['pincode'].find_one({'_id': ObjectId('66b417525f97a65f18cf2b08')}, {'pin': 1})
-    st.write(pin_doc)
 except Exception as e:
     st.error(f"Error connecting to MongoDB: {e}")
 
 # Function to get the current PIN from the database
 def get_current_pin():
     # Retrieve the pin from the pincode collection using the ObjectId
-    pin_doc = db['pincode'].find_one({'_id': ObjectId('66b417525f97a65f18cf2b08')}, {'pin': 1})
-
+    pin_doc = db['pincode'].find_one({}, {'pin': 1})
     # Extract the pin if the document is found
     pin = pin_doc['pin'] if pin_doc else None
 
