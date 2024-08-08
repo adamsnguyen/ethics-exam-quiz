@@ -3,9 +3,6 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from bson.objectid import ObjectId
 
-# Update session state
-st.session_state.update(st.session_state)
-
 # Connect to MongoDB
 uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)
@@ -79,8 +76,8 @@ if st.session_state.authorized:
         for key, value in options.items():
             # Ensure unique key for each option button
             button_key = f"option_{index}_{key}"
-            if st.button(value, key=button_key, on_click=select_option, args=(index, key)):
-                pass
+            if st.button(value, key=button_key):
+                select_option(index, key)
 
     # Display the current question
     current_index = st.session_state.current_question
