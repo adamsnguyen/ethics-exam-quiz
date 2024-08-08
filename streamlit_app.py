@@ -1,11 +1,10 @@
 import streamlit as st
 from pymongo import MongoClient
-from streamlit.runtime.secrets import secrets
 
 # Connect to MongoDB
-uri = secrets["mongo"]["uri"]
+uri = st.secrets["mongo"]["uri"]
 client = MongoClient(uri)
-questions = secrets["questions"]
+questions = st.secrets["questions"]
 db = client[questions]
 collection = db['questions']
 
