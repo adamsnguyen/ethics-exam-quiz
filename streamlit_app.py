@@ -64,10 +64,12 @@ if st.session_state.authorized:
         question = questions[index]
         st.write(question['question'])
 
+        options = question['options']
+        
         # Display feedback message after the question
-        if f"answer{current_index}" in st.session_state:
-            if st.session_state[f"answer{current_index}"]:
-                st.success("Correct!")
+        if f"answer{index}" in st.session_state:
+            if st.session_state[f"answer{index}"]:
+                st.success(f"Correct: {options[questions[index]['correct_answer']])
             else:
                 st.error("Incorrect!")
                 
