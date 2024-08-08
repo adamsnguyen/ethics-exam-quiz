@@ -38,13 +38,14 @@ def verify_pin(user_input):
     return user_input == st.session_state.cached_pin
 
 # PIN input and verification
-pin_input = st.text_input('Enter the PIN:', type='password')
-if pin_input and not st.session_state.authorized:
-    if verify_pin(pin_input):
-        st.session_state.authorized = True
-        st.success("Access Granted")
-    else:
-        st.error("Invalid PIN")
+if not st.session_state.authorized:
+    pin_input = st.text_input('Enter the PIN:', type='password')
+    if pin_input:
+        if verify_pin(pin_input):
+            st.session_state.authorized = True
+            st.success("Access Granted")
+        else:
+            st.error("Invalid PIN")
 
 # Check PIN on every user event
 if st.session_state.authorized:
