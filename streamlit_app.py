@@ -65,7 +65,7 @@ if st.session_state.authorized:
 
         
         for key, value in options.items():
-            col1, col2 = st.columns([1,6])
+            col1, col2 = st.columns([1,8], vertical_alignment = "center")
             with col1:
                 st.write(f"{key}")
             with col2:
