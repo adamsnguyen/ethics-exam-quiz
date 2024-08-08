@@ -8,7 +8,7 @@ st.session_state.update(st.session_state)
 # Connect to MongoDB
 uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
-db = client.db[st.secrets["questions"]]
+db = client[[st.secrets["questions"]]]
 
 #list the collections
 lst = db.list_collection_names()
