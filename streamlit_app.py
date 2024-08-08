@@ -61,7 +61,7 @@ if st.session_state.authorized:
         if f"answer{index}" in st.session_state:
             rerun = (key == st.session_state[f"answer{index}"])
         st.session_state[f"answer{index}"] = (key == questions[index]['correct_answer'])
-        if not rerun:
+        if rerun:
             st.rerun()
 
     def display_question(index):
