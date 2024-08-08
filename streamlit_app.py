@@ -70,7 +70,6 @@ if st.session_state.authorized:
                 st.success("Correct!")
             else:
                 st.error("Incorrect!")
-        st.rerun()
                 
         st.divider()
         options = question['options']
