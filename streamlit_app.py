@@ -90,7 +90,7 @@ if st.session_state.authorized:
             with col2:
                 if st.button(f"{value}", key=f"option_{index}_{key}", use_container_width=True):
                     select_option(index, key)
-                    if rerun:
+                    if not rerun:
                         st.rerun()
 
     current_index = st.session_state.current_question
