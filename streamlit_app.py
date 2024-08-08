@@ -90,7 +90,7 @@ if st.session_state.authorized:
                     margin: 4px 2px;
                     cursor: pointer;
                     width: 100%;
-                    height: 60px;
+                    height: 180px;  /* Triple the height */
                 }}
                 </style>
                 <button class="button-{button_key}" onclick="window.location.href='/?selected_option={key}'">{button_label}</button>
@@ -103,22 +103,59 @@ if st.session_state.authorized:
     # Submit button that spans across both columns
     submit_col = st.columns(1)
     with submit_col[0]:
-        if st.button("Submit", key="submit"):
-            correct_answer = questions[current_index]['correct_answer']
-            user_answer = st.session_state.answers[current_index]
-            if user_answer == correct_answer:
-                st.success("Correct!")
-            else:
-                st.error("Incorrect!")
+        submit_html = """
+        <style>
+        .submit-button {
+            width: 100%;
+            height: 60px;  /* Same height as navigation buttons */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+        }
+        </style>
+        <button class="submit-button" onclick="window.location.href='/?submit=true'">Submit</button>
+        """
+        st.markdown(submit_html, unsafe_allow_html=True)
 
     # Navigation buttons with equal width
     nav_cols = st.columns(2)
     with nav_cols[0]:
-        if st.button("Previous", key="prev") and current_index > 0:
-            st.session_state.current_question -= 1
+        prev_html = """
+        <style>
+        .prev-button {
+            width: 100%;
+            height: 60px;  /* Consistent height */
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+        }
+        </style>
+        <button class="prev-button" onclick="window.location.href='/?prev=true'">Previous</button>
+        """
+        st.markdown(prev_html, unsafe_allow_html=True)
     with nav_cols[1]:
-        if st.button("Next", key="next") and current_index < len(questions) - 1:
-            st.session_state.current_question += 1
+        next_html = """
+        <style>
+        .next-button {
+            width: 100%;
+            height: 60px;  /* Consistent height */
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+        }
+        </style>
+        <button class="next-button" onclick="window.location.href='/?next=true'">Next</button>
+        """
+        st.markdown(next_html, unsafe_allow_html=True)
 
     # Sidebar for question status
     st.sidebar.title("Question Status")
