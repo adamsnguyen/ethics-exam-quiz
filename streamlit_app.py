@@ -24,12 +24,21 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
-    pins = list(db.find())
-    st.write(pins)
-    pin = pins[0]
+    # Retrieve the pin from the pincode collection
+    try:
+        # Since there is only one document, we can use find_one without a filter
+        pin_doc = db['pincode'].find_one({}, {'pin': 1})
+        if pin_doc:
+            print("PIN:", pin_doc['pin'])
+        else:
+            print("No document found in the collection.")
+    except Exception as e:
+        print("An error occurred:", e)
 
     # Output the pin
+    pin = pin_doc['pin']
     st.write(pin)
+    return pin
 
 # Initialize session state for authorization and PIN
 if 'authorized' not in st.session_state:
