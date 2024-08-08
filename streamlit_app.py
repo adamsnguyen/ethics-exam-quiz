@@ -3,11 +3,12 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from bson.objectid import ObjectId
 
+# Update session state
 st.session_state.update(st.session_state)
 
 # Connect to MongoDB
 uri = st.secrets["uri"]
-client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
+client = MongoClient(uri, server_api=ServerApi('1'), tls=True)
 db = client[st.secrets["questions"]]
 
 try:
@@ -18,20 +19,17 @@ except Exception as e:
 
 # Function to get the current PIN from the database
 def get_current_pin():
-    # Retrieve the pin from the pincode collection
     try:
-        # Since there is only one document, we can use find_one without a filter
+        # Retrieve the pin from the pincode collection
         pin_doc = db['pincode'].find_one({}, {'pin': 1})
         if pin_doc:
-            print("PIN:", pin_doc['pin'])
+            return pin_doc['pin']
         else:
-            print("No document found in the collection.")
+            st.error("No document found in the collection.")
+            return None
     except Exception as e:
-        print("An error occurred:", e)
-
-    # Output the pin
-    pin = pin_doc['pin']
-    return pin
+        st.error(f"An error occurred: {e}")
+        return None
 
 # Initialize session state for authorization and PIN
 if 'authorized' not in st.session_state:
@@ -54,7 +52,7 @@ if pin_input and not st.session_state.authorized:
 # Check PIN on every user event
 if st.session_state.authorized:
     current_pin = get_current_pin()
-    if current_pin != st.session_state.cached_pin:
+    if current_pin and current_pin != st.session_state.cached_pin:
         st.session_state.authorized = False
         st.warning("PIN has changed. Session closed.")
         st.stop()
@@ -77,7 +75,6 @@ if st.session_state.authorized:
         for key, value in options.items():
             # Ensure unique key for each option button
             button_key = f"option_{index}_{key}"
-            st.write(f"Debug: Displaying button with key {button_key}")
             if st.button(value, key=button_key):
                 st.session_state.answers[index] = key
 
@@ -106,6 +103,5 @@ if st.session_state.authorized:
         status = "Not Attempted" if answer is None else ("Correct" if answer == questions[i]['correct_answer'] else "Incorrect")
         # Create a button for each question link with a unique key
         link_key = f"link_{i}"
-        st.write(f"Debug: Creating sidebar button with key {link_key}")
         if st.sidebar.button(f"Question {i+1}: {status}", key=link_key):
             st.session_state.current_question = i
