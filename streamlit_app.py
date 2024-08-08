@@ -1,9 +1,11 @@
 import streamlit as st
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
+
 
 # Connect to MongoDB
 uri = st.secrets["uri"]
-client = MongoClient(uri, serverSelectionTimeoutMS=5000)  # 5000 
+client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000 
 
 try:
     # Attempt to get the server information to verify the connection
