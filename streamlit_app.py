@@ -7,7 +7,7 @@ st.session_state.update(st.session_state)
 # Connect to MongoDB
 uri = st.secrets["uri"]
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True)  # 5000
-db = client.db("general")
+db = client.db("questions")
 
 try:
     # Attempt to get the server information to verify the connection
