@@ -2,6 +2,7 @@ import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
+st.session_state.update(st.session_state)
 
 # Connect to MongoDB
 uri = st.secrets["uri"]
